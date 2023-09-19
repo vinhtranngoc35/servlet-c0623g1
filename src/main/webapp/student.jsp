@@ -25,6 +25,7 @@
         </c:if>
         <div>
             <a href="/student?action=create" class="btn btn-primary mb-2">Create</a>
+            <a href="/student?action=showRestore" class="btn btn-primary mb-2">Restore</a>
         </div>
 
         <table class="table table-striped">
@@ -41,6 +42,9 @@
                 <td>
                     Gender
                 </td>
+                <td>
+                    Action
+                </td>
             </tr>
             <c:forEach var="student" items="${students}">
                 <tr>
@@ -55,6 +59,11 @@
                     </td>
                     <td>
                             ${student.gender}
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" onclick="return confirm('Do you want remove ${student.name} ?')" href="/student?action=delete&id=${student.id}">
+                            Delete
+                        </a>
                     </td>
                 </tr>
             </c:forEach>

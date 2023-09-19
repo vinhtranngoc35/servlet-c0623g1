@@ -13,6 +13,8 @@ public class Student {
 
     private EGender gender;
 
+    private boolean deleted = false;
+
     public Student(Integer id, String name, Date dob, EGender gender) {
         this.id = id;
         this.name = name;
@@ -50,5 +52,13 @@ public class Student {
 
     public void setGender(EGender gender) {
         this.gender = gender;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

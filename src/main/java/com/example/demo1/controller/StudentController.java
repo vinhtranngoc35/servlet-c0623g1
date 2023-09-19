@@ -30,10 +30,35 @@ public class StudentController extends HttpServlet {
             case "create":
                 showCreate(req, resp);
                 break;
+            case "showRestore":
+                showRestore(req,resp);
+                break;
+            case "restore":
+                restore(req,resp);
+                break;
+            case "delete":
+                delete(req,resp);
+                break;
             default:
                 showList(req, resp);
         }
 
+    }
+
+    private void restore(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        studentService.restore(Integer.parseInt(req.getParameter("id")));
+        resp.sendRedirect("/student?action=showRestore&message=Restored");
+    }
+
+    private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        studentService.remove(Integer.parseInt(req.getParameter("id")));
+        resp.sendRedirect("/student?message=Deleted");
+    }
+
+    private void showRestore(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("students", studentService.getStudents(true));
+        req.setAttribute("message", req.getParameter("message"));
+        req.getRequestDispatcher("restore.jsp").forward(req, resp);
     }
 
     private void showCreate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -67,7 +92,7 @@ public class StudentController extends HttpServlet {
 
 
     private void showList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("students", studentService.getStudents());
+        req.setAttribute("students", studentService.getStudents(false));
         req.setAttribute("message", req.getParameter("message"));
         req.getRequestDispatcher("student.jsp").forward(req, resp);
     }
