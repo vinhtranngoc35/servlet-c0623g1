@@ -49,7 +49,7 @@
           Action
         </td>
       </tr>
-      <c:forEach var="product" items="${products}">
+      <c:forEach var="product" items="${page.content}">
         <tr>
           <td>
               ${product.id}
@@ -74,6 +74,28 @@
         </tr>
       </c:forEach>
     </table>
+    <nav aria-label="...">
+      <ul class="pagination">
+        <li class="page-item <c:if test="${page.currentPage == 1}">disabled</c:if>">
+          <a class="page-link"  href="/product?page=${page.currentPage - 1}" tabindex="-1" aria-disabled="true">Previous</a>
+        </li>
+        <c:forEach var="number" begin="1" end="${page.totalPage}">
+          <c:if test="${number == page.currentPage}">
+            <li class="page-item active" aria-current="page">
+              <a class="page-link" href="/product?page=${number}">${number}</a>
+            </li>
+          </c:if>
+          <c:if test="${number != page.currentPage}">
+            <li class="page-item">
+              <a class="page-link" href="/product?page=${number}">${number}</a>
+            </li>
+          </c:if>
+        </c:forEach>
+        <li class="page-item <c:if test="${page.currentPage == page.totalPage}">disabled</c:if>">
+          <a class="page-link" href="/product?page=${page.currentPage + 1}">Next</a>
+        </li>
+      </ul>
+    </nav>
   </div>
 
 </div>

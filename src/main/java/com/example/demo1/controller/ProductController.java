@@ -39,7 +39,13 @@ public class ProductController extends HttpServlet {
     }
 
     private void showList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("products", productService.getProducts());
+        String pageString = req.getParameter("page");
+        if(pageString == null){
+            pageString = "1";
+        }
+
+
+        req.setAttribute("page", productService.getProducts(Integer.parseInt(pageString)));
         req.setAttribute("message", req.getParameter("message"));
         req.getRequestDispatcher("product/index.jsp").forward(req, resp);
     }
