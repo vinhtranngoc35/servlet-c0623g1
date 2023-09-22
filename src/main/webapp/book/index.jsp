@@ -78,6 +78,7 @@
                             ${book.getAuthors()}
                     </td>
                     <td>
+
                         <a class="btn btn-danger" onclick="return confirm('Do you want remove ${product.name} ?')" href="/product?action=delete&id=${product.id}">
                             Delete
                         </a>

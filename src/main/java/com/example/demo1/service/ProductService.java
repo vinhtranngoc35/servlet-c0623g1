@@ -4,14 +4,7 @@ import com.example.demo1.dao.ProductDAO;
 import com.example.demo1.model.Product;
 import com.example.demo1.service.dto.Page;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ProductService {
-    private static List<Product> products = new ArrayList<>();
-
-    private static int idCurrent;
-
     private final ProductDAO productDAO;
 
     public ProductService() {
@@ -20,11 +13,29 @@ public class ProductService {
 
 
     public void create(Product product){
-        product.setId(++idCurrent);
-        products.add(product);
+        productDAO.create(product);
     }
 
-    public Page<Product> getProducts(int page){
-        return productDAO.findAll(page);
+    public Page<Product> getProducts(int page, boolean isShowRestore, String search){
+        return productDAO.findAll(page, isShowRestore, search);
+    }
+
+    public Product findById(int id){
+        return productDAO.findById(id);
+    }
+
+    public void update(Product product, int id){
+        product.setId(id);
+        productDAO.update(product);
+    }
+
+    public void restore(String[] ids){
+        for (var id : ids) {
+            productDAO.restore(Integer.parseInt(id));
+        }
+    }
+
+    public void delete(int id){
+        productDAO.delete(id);
     }
 }
