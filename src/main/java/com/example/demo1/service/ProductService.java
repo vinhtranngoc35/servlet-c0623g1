@@ -4,6 +4,8 @@ import com.example.demo1.dao.ProductDAO;
 import com.example.demo1.model.Product;
 import com.example.demo1.service.dto.Page;
 
+import java.util.List;
+
 public class ProductService {
     private final ProductDAO productDAO;
 
@@ -18,6 +20,10 @@ public class ProductService {
 
     public Page<Product> getProducts(int page, boolean isShowRestore, String search){
         return productDAO.findAll(page, isShowRestore, search);
+    }
+
+    public List<Product> findAll(){
+        return productDAO.findAll();
     }
 
     public Product findById(int id){

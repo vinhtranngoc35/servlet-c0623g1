@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDAO  extends DatabaseConnection{
 
@@ -73,6 +74,24 @@ public class ProductDAO  extends DatabaseConnection{
         } catch (SQLException e) {
             System.out.println(e.getMessage());;
         }
+    }
+    public List<Product> findAll(){
+        var content = new ArrayList<Product>();
+        var SELECT_ALL = "SELECT p.*, c.name category_name " +
+                "FROM products p JOIN categories c on c.id = p.category_id  WHERE p.deleted = ? ";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
+            preparedStatement.setInt(1, 0);
+            System.out.println(preparedStatement);
+            var rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                content.add(getProductByResultSet(rs));
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return content;
     }
     public void update(Product product){
         String UPDATE = "UPDATE `c0623g1`.`products` " +
